@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { cookies, headers, } from 'next/headers'
 // import { useSearchParams } from 'next/navigation';
 import { sleep } from '@/utils';
-import { doer } from '@/utils/maxwell';
+// import { doer } from '@/utils/maxwell';
 import Index from './index-page/index';
 
 
@@ -17,22 +17,22 @@ const getData = async () => {
   const referer = headers().get('referer')
   const res = await fetch('http://jsonplaceholder.typicode.com/posts/2');
   const data = await res.json();
-  const activityInfo = await doer('/v1/user/demo_trading/get_enrolled_info', { activity_id: 'demo_trading_2023_07_25' });
-  console.log('getData', referer, data, activityInfo)
+  // const activityInfo = await doer('/v1/user/demo_trading/get_enrolled_info', { activity_id: 'demo_trading_2023_07_25' });
+  console.log('getData', referer, data)
   await sleep(1);
   return {
     token,
     referer,
     // data: data.json()
     data,
-    activityInfo
+    activityInfo: { payload: { end_ts: 123456789 } }
   }
 }
 
 
 
 const Demo: FunctionComponent<DemoProps> = async () => {
-  const { token, referer, data, activityInfo } = await getData();
+  const { token, referer, data, activityInfo = { payload: { end_ts: 9999 } } } = await getData();
 
 
   return (
