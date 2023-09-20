@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { cookies, headers, } from 'next/headers'
 // import { useSearchParams } from 'next/navigation';
 import { sleep } from '@/utils';
+import { doer } from '@/utils/maxwell';
 import Index from './index-page/index';
 
 
@@ -16,20 +17,22 @@ const getData = async () => {
   const referer = headers().get('referer')
   const res = await fetch('http://jsonplaceholder.typicode.com/posts/2');
   const data = await res.json();
-  console.log('getData', referer, data)
+  const activityInfo = await doer('/v1/user/demo_trading/get_enrolled_info', { activity_id: 'demo_trading_2023_07_25' });
+  console.log('getData', referer, data, activityInfo)
   await sleep(1);
   return {
     token,
     referer,
     // data: data.json()
-    data
+    data,
+    activityInfo
   }
 }
 
 
 
 const Demo: FunctionComponent<DemoProps> = async () => {
-  const { token, referer, data } = await getData();
+  const { token, referer, data, activityInfo } = await getData();
 
 
   return (
@@ -38,7 +41,7 @@ const Demo: FunctionComponent<DemoProps> = async () => {
       <h2>{token}</h2>
       <h1>{referer}</h1>
       <div>{data.body}</div>
-      <Index referer={referer ?? ''} data={[]} />
+      <Index referer={referer ?? ''} data={[]} activityInfo={activityInfo.payload} />
     </div>
   );
 }
