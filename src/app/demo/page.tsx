@@ -14,6 +14,7 @@ const getData = async () => {
   // console.log('header', headers, headers())
   const token = '-';
   const referer = headers().get('referer')
+  console.log('getData', referer)
   await sleep(1);
   return {
     token,
