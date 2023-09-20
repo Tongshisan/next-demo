@@ -30,7 +30,7 @@ const Demo: FunctionComponent<DemoProps> = async () => {
 
   return (
     <div>
-      <h1>Demo</h1>
+      <h1>{`Demo-${referer}-${token}`}</h1>
       <h2>{token}</h2>
       <h1>{referer}</h1>
       <Index referer={referer ?? ''} data={[]} />
